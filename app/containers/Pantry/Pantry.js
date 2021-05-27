@@ -10,11 +10,14 @@ import {
   Icon,
   Content,
 } from "native-base";
+import { Link, useHistory } from "react-router-native";
 
 import PantryList from "../../components/PantryList/PantryList";
 
 export default function Pantry() {
   const [fabActive, setFabActive] = useState(false);
+
+  let history = useHistory();
 
   return (
     <Container style={styles.container}>
@@ -29,7 +32,9 @@ export default function Pantry() {
         direction="up"
         style={{ backgroundColor: "green" }}
         position="bottomRight"
-        onPress={() => setFabActive(!fabActive)}
+        onPress={() => {
+          history.push("/pantry/entry");
+        }}
       >
         <Icon name="basket"></Icon>
       </Fab>

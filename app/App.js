@@ -17,6 +17,7 @@ import Account from "./containers/Account/Account.js";
 import Pantry from "./containers/Pantry/Pantry.js";
 import Recipe from "./containers/Recipe/Recipe.js";
 import Footer from "./components/Footer/Footer";
+import PantryEntry from "./containers/PantryEntry/PantryEntry";
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
         </Header>
         <Switch>
           <Route exact path="/" component={GroceryList} />
+          <Route exact path="/pantry/entry" component={PantryEntry} />
           <Route path="/pantry" component={Pantry} />
           <Route path="/recipe" component={Recipe} />
           <Route path="/account" component={Account} />
