@@ -9,6 +9,7 @@ import {
   Right,
   Left,
   View,
+  Thumbnail,
 } from "native-base";
 import { FlatList, SafeAreaView } from "react-native";
 
@@ -68,8 +69,17 @@ const Title = ({ title, items }) => {
         return (
           <ListItem>
             <Left>
-              <Text>{item.item}</Text>
+              <Thumbnail
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 30 / 2,
+                }}
+                source={require("../../assets/721px-Tomato_je.jpeg")}
+              />
+              <Text style={{ paddingLeft: 10 }}>{item.item}</Text>
             </Left>
+
             <Right>
               <Text>{item.quantity}</Text>
             </Right>
