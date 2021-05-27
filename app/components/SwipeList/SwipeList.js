@@ -59,7 +59,6 @@ export default function SwipeList(props) {
   const closeRow = (rowMap, rowKey) => {
     if (rowMap[rowKey]) {
       rowMap[rowKey].closeRow();
-      console.log(listData);
     }
   };
 

@@ -104,7 +104,6 @@ export default function GroceryList() {
                 : null;
               setInputItem(null);
               setFabAction(!fabActive);
-              console.log(groceryList);
             }}
           />
         ) : (
