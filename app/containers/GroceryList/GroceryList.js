@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import StyleSheet from "react-native";
 import {
   FlatList,
+  StyleSheet,
   SafeAreaView,
   StatusBar,
   TouchableOpacity,
@@ -52,13 +52,13 @@ const DATA = [
 
 export default function GroceryList() {
   const [selectedId, setSelectedId] = useState(null);
-  const [fabActive, setFabAction] = useState(false);
+  const [fabActive, setFabActive] = useState(false);
   const [inputItem, setInputItem] = useState(null);
   const [inputQuantity, setInputQuantity] = useState(null);
   const [groceryList, setGroceryList] = useState(DATA);
 
   return (
-    <Container>
+    <Container style={styles.container}>
       <Card>
         <CardItem header>
           <Text>Grocery List</Text>
@@ -86,7 +86,7 @@ export default function GroceryList() {
         direction="up"
         style={{ backgroundColor: "green" }}
         position="bottomRight"
-        onPress={() => setFabAction(!fabActive)}
+        onPress={() => setFabActive(!fabActive)}
       >
         {fabActive ? (
           <Icon
@@ -113,3 +113,10 @@ export default function GroceryList() {
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#f4f4f4",
+    flex: 1,
+  },
+});
