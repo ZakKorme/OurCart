@@ -9,8 +9,15 @@ import {
   Body,
   Title,
   SwipeRow,
+  Root,
 } from "native-base";
-import { NativeRouter, Route, Link, Switch } from "react-router-native";
+import {
+  NativeRouter,
+  Route,
+  Link,
+  Switch,
+  useLocation,
+} from "react-router-native";
 
 import GroceryList from "./containers/GroceryList/GroceryList";
 import Account from "./containers/Account/Account.js";
@@ -18,28 +25,25 @@ import Pantry from "./containers/Pantry/Pantry.js";
 import Recipe from "./containers/Recipe/Recipe.js";
 import Footer from "./components/Footer/Footer";
 import PantryEntry from "./containers/PantryEntry/PantryEntry";
+import RecipeFav from "./containers/RecipeFav/RecipeFav";
 
 export default function App() {
   return (
-    <NativeRouter>
-      <Container style={styles}>
-        <Header>
-          <Left />
-          <Body>
-            <Title>OurCart</Title>
-          </Body>
-          <Right />
-        </Header>
-        <Switch>
-          <Route exact path="/" component={GroceryList} />
-          <Route exact path="/pantry/entry" component={PantryEntry} />
-          <Route path="/pantry" component={Pantry} />
-          <Route path="/recipe" component={Recipe} />
-          <Route path="/account" component={Account} />
-        </Switch>
-        <Footer />
-      </Container>
-    </NativeRouter>
+    <Root>
+      <NativeRouter>
+        <Container style={styles}>
+          <Switch>
+            <Route exact path="/" component={GroceryList} />
+            <Route exact path="/pantry/entry" component={PantryEntry} />
+            <Route exact path="/recipe/fav" component={RecipeFav} />
+            <Route path="/pantry" component={Pantry} />
+            <Route path="/recipe" component={Recipe} />
+            <Route path="/account" component={Account} />
+          </Switch>
+          <Footer />
+        </Container>
+      </NativeRouter>
+    </Root>
   );
 }
 

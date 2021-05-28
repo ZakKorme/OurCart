@@ -13,6 +13,7 @@ import {
   Picker,
 } from "native-base";
 import { Link, useHistory } from "react-router-native";
+import AppHeader from "../../components/Header/Header";
 
 export default function PantryEntry() {
   const [category, setCategory] = useState(null);
@@ -21,6 +22,7 @@ export default function PantryEntry() {
 
   return (
     <Container>
+      <AppHeader title={"Pantry Entry"} />
       <Form>
         <Item picker success={category ? true : false}>
           <Picker

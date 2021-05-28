@@ -23,6 +23,8 @@ import {
   Fab,
   Button,
   Card,
+  Header,
+  Title,
   CardItem,
   Item,
   Input,
@@ -31,6 +33,7 @@ import {
 
 import GroceryListItem from "../../components/GroceryListItem/GroceryListItem";
 import SwipeList from "../../components/SwipeList/SwipeList";
+import AppHeader from "../../components/Header/Header";
 
 const DATA = [
   {
@@ -59,11 +62,7 @@ export default function GroceryList() {
 
   return (
     <Container style={styles.container}>
-      <Card>
-        <CardItem header>
-          <Text>Grocery List</Text>
-        </CardItem>
-      </Card>
+      <AppHeader title={"Grocery List"} />
       <SwipeList data={groceryList} />
       {fabActive ? (
         <Form style={{ paddingBottom: "1%" }}>
@@ -103,7 +102,7 @@ export default function GroceryList() {
                   ])
                 : null;
               setInputItem(null);
-              setFabAction(!fabActive);
+              setFabActive(!fabActive);
             }}
           />
         ) : (

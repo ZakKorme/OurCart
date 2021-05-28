@@ -13,6 +13,7 @@ import {
 import { Link, useHistory } from "react-router-native";
 
 import PantryList from "../../components/PantryList/PantryList";
+import AppHeader from "../../components/Header/Header";
 
 export default function Pantry() {
   const [fabActive, setFabActive] = useState(false);
@@ -21,11 +22,7 @@ export default function Pantry() {
 
   return (
     <Container style={styles.container}>
-      <Card>
-        <CardItem header>
-          <Text>Pantry</Text>
-        </CardItem>
-      </Card>
+      <AppHeader title={"Pantry"} />
       <PantryList />
       <Fab
         active={fabActive}
