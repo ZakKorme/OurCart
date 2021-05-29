@@ -7,8 +7,9 @@ import {
   Text,
   View,
   Icon,
+  Fab,
 } from "native-base";
-import { Link, useHistory } from "react-router-native";
+import { useHistory } from "react-router-native";
 
 import AppHeader from "../../components/Header/Header";
 
@@ -70,6 +71,18 @@ export default function RecipeFav() {
           renderContent={_renderContent}
         />
       </Content>
+
+      <Fab
+        active={true}
+        direction="up"
+        style={{ backgroundColor: "green" }}
+        position="bottomRight"
+        onPress={() => {
+          history.push("/recipe");
+        }}
+      >
+        <Icon name="book" />
+      </Fab>
     </Container>
   );
 }

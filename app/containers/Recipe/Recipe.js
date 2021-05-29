@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Image, StyleSheet } from "react-native";
 
 import {
@@ -23,25 +23,9 @@ import {
 import { Link, useHistory } from "react-router-native";
 import AppHeader from "../../components/Header/Header";
 import App from "../../App";
-const cards = [
-  {
-    text: "Card One",
-    name: "One",
-    image: require("../../assets/721px-Tomato_je.jpeg"),
-  },
-  {
-    text: "Card Two",
-    name: "Two",
-    image: require("../../assets/721px-Tomato_je.jpeg"),
-  },
-  {
-    text: "Card Three",
-    name: "Three",
-    image: require("../../assets/721px-Tomato_je.jpeg"),
-  },
-];
 
 export default function Recipe() {
+  const [recipeNum, setRecipeNum] = useState(null);
   let history = useHistory();
   return (
     <Container style={styles.container}>
@@ -53,6 +37,8 @@ export default function Recipe() {
             style={{ fontSize: 15 }}
             picker
             keyboardType="numeric"
+            value={recipeNum}
+            onChangeText={(val) => setRecipeNum(val)}
           />
         </ListItem>
         <ListItem>
@@ -71,38 +57,12 @@ export default function Recipe() {
           rounded
           dark
           iconLeft
+          onPress={() => history.push("/recipe/search")}
         >
           <Icon name="search" />
           <Text>Search</Text>
         </Button>
       </Form>
-
-      {/* <Header /> */}
-      {/* <View>
-        <DeckSwiper
-          dataSource={cards}
-          renderItem={(item) => (
-            <Card style={{ elevation: 3 }}>
-              <CardItem>
-                <Left>
-                  <Thumbnail source={item.image} />
-                  <Body>
-                    <Text>{item.text}</Text>
-                    <Text note>Recipe</Text>
-                  </Body>
-                </Left>
-              </CardItem>
-              <CardItem cardBody>
-                <Image style={{ height: 300, flex: 1 }} source={item.image} />
-              </CardItem>
-              <CardItem>
-                <Icon name="heart" style={{ color: "#ED4A6A" }} />
-                <Text>{item.name}</Text>
-              </CardItem>
-            </Card>
-          )}
-        />
-      </View> */}
     </Container>
   );
 }

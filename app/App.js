@@ -26,6 +26,7 @@ import Recipe from "./containers/Recipe/Recipe.js";
 import Footer from "./components/Footer/Footer";
 import PantryEntry from "./containers/PantryEntry/PantryEntry";
 import RecipeFav from "./containers/RecipeFav/RecipeFav";
+import RecipeSearch from "./containers/RecipeSearch/RecipeSearch";
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
             <Route exact path="/" component={GroceryList} />
             <Route exact path="/pantry/entry" component={PantryEntry} />
             <Route exact path="/recipe/fav" component={RecipeFav} />
+            <Route exact path="/recipe/search" component={RecipeSearch} />
             <Route path="/pantry" component={Pantry} />
             <Route path="/recipe" component={Recipe} />
             <Route path="/account" component={Account} />
