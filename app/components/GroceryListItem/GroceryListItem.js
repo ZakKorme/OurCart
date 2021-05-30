@@ -24,7 +24,7 @@ export default function GroceryListItem(props) {
       <Body style={{ borderColor: "white" }}>
         <Text>{props.item}</Text>
       </Body>
-      <Right>
+      <Right style={{ borderColor: "white" }}>
         <Text>{props.quantity}</Text>
       </Right>
     </ListItem>

@@ -21,10 +21,12 @@ const DATA = [
       {
         item: "Tomatoes",
         quantity: 2,
+        img: require("../../assets/721px-Tomato_je.jpeg"),
       },
       {
         item: "Oranges",
         quantity: 1,
+        img: require("../../assets/oranges.jpeg"),
       },
     ],
   },
@@ -35,10 +37,12 @@ const DATA = [
       {
         item: "Milk",
         quantity: 1,
+        img: require("../../assets/Milk.jpeg"),
       },
       {
         item: "Cheese",
         quantity: 3,
+        img: require("../../assets/cheese.jpeg"),
       },
     ],
   },
@@ -49,10 +53,12 @@ const DATA = [
       {
         item: "Salt",
         quantity: 1,
+        img: require("../../assets/salt.jpeg"),
       },
       {
         item: "Pepper",
         quantity: 1,
+        img: require("../../assets/pepper.jpeg"),
       },
     ],
   },
@@ -65,9 +71,9 @@ const Title = ({ title, items }) => {
         <Text>{title}</Text>
       </ListItem>
 
-      {items.map((item) => {
+      {items.map((item, index) => {
         return (
-          <ListItem>
+          <ListItem key={`${item.category_id}_${index}`}>
             <Left>
               <Thumbnail
                 style={{
@@ -75,7 +81,7 @@ const Title = ({ title, items }) => {
                   height: 30,
                   borderRadius: 30 / 2,
                 }}
-                source={require("../../assets/721px-Tomato_je.jpeg")}
+                source={item.img}
               />
               <Text style={{ paddingLeft: 10 }}>{item.item}</Text>
             </Left>

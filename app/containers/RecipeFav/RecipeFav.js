@@ -8,15 +8,27 @@ import {
   View,
   Icon,
   Fab,
+  ListItem,
 } from "native-base";
 import { useHistory } from "react-router-native";
 
 import AppHeader from "../../components/Header/Header";
 
 const dataArray = [
-  { title: "Recipe One", content: "Lorem ipsum dolor sit amet" },
-  { title: "Recipe Two", content: "Lorem ipsum dolor sit amet" },
-  { title: "Recipe Three", content: "Lorem ipsum dolor sit amet" },
+  {
+    recipeName: "Baked Tomatoes",
+    ingredients: {
+      usedIngredients: ["Tomatoes", "Goat Milk", "Parmesan Cheese"],
+      missedIngredients: ["Basil"],
+    },
+  },
+  {
+    recipeName: "Mini Ham Omelets",
+    ingredients: {
+      usedIngredients: ["Tomatoes", "Goat Milk", "Parmesan Cheese"],
+      missedIngredients: ["Basil"],
+    },
+  },
 ];
 
 export default function RecipeFav() {
@@ -33,7 +45,7 @@ export default function RecipeFav() {
           backgroundColor: "white",
         }}
       >
-        <Text style={{ fontWeight: "600" }}> {item.title}</Text>
+        <Text style={{ fontWeight: "600" }}> {item.recipeName}</Text>
         {expanded ? (
           <Icon style={{ fontSize: 18 }} name="remove-circle" />
         ) : (
@@ -51,7 +63,32 @@ export default function RecipeFav() {
           fontStyle: "italic",
         }}
       >
-        {item.content}
+        <ListItem style={{ flexDirection: "row" }}>
+          <Text style={{ paddingRight: 5 }}>Used Ingredients:</Text>
+          {item.ingredients.usedIngredients.map((ingredients, index) => {
+            return (
+              <View style={{ flexShrink: 1 }}>
+                <Text note>
+                  {item.ingredients.usedIngredients[index + 1]
+                    ? `${ingredients},`
+                    : ingredients}
+                </Text>
+              </View>
+            );
+          })}
+        </ListItem>
+        <ListItem style={{ lexShrink: 1 }}>
+          <Text style={{ paddingRight: 5 }}>Missing Ingredients:</Text>
+          {item.ingredients.missedIngredients.map((ingredients, index) => {
+            return (
+              <Text note>
+                {item.ingredients.missedIngredients[index + 1]
+                  ? `${ingredients},`
+                  : ingredients}
+              </Text>
+            );
+          })}
+        </ListItem>
       </Text>
     );
   };

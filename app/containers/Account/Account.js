@@ -16,8 +16,11 @@ export default function Account() {
       <View style={styles.userInfoSection}>
         <View style={{ flexDirection: "row", marginTop: 15 }}>
           <Avatar.Image
-            source={require("../../assets/721px-Tomato_je.jpeg")}
+            source={require("../../assets/user.png")}
             size={80}
+            style={{
+              backgroundColor: "white",
+            }}
           />
           <View style={{ marginLeft: 20 }}>
             <Title

@@ -24,30 +24,21 @@ import AppHeader from "../../components/Header/Header";
 
 const cards = [
   {
-    text: "Card One",
+    recipeName: "Baked Tomatoes",
     name: "One",
-    image: require("../../assets/721px-Tomato_je.jpeg"),
-    recipe: {
-      title: "recipe 1",
-      content: "Lorem ipsum dolor sit amet",
+    image: { uri: "https://spoonacular.com/recipeImages/633852-312x231.jpg" },
+    ingredients: {
+      usedIngredients: ["Tomatoes", "Goat Milk", "Parmesan Cheese"],
+      missedIngredients: ["Basil"],
     },
   },
   {
-    text: "Card Two",
-    name: "Two",
-    image: require("../../assets/721px-Tomato_je.jpeg"),
-    recipe: {
-      title: "recipe 2",
-      content: "Lorem ipsum dolor sit amet",
-    },
-  },
-  {
-    text: "Card Three",
-    name: "Three",
-    image: require("../../assets/721px-Tomato_je.jpeg"),
-    recipe: {
-      title: "recipe 3",
-      content: "Lorem ipsum dolor sit amet",
+    recipeName: "Mini Ham Omelets",
+    name: "One",
+    image: { uri: "https://spoonacular.com/recipeImages/636769-312x231.jpg" },
+    ingredients: {
+      usedIngredients: ["Cherry Tomatoes", "Milk", "Parmesan Cheese"],
+      missedIngredients: ["Eggs", "Onions", "Bell Peppers", "Prosciutto"],
     },
   },
 ];
@@ -99,7 +90,7 @@ export default function RecipeSearch() {
                 <Left>
                   <Thumbnail source={item.image} />
                   <Body>
-                    <Text>{item.text}</Text>
+                    <Text>{item.recipeName}</Text>
                     <Text note>Recipe</Text>
                   </Body>
                 </Left>
@@ -109,9 +100,37 @@ export default function RecipeSearch() {
               </CardItem>
               <CardItem>
                 <List>
+                  <Text>Used Ingredients: </Text>
                   <ListItem>
-                    <Text>{item.recipe.title}</Text>
+                    {item.ingredients.usedIngredients.map(
+                      (ingredients, index) => {
+                        return (
+                          <Text note style={{ paddingRight: 5 }}>
+                            {item.ingredients.usedIngredients[index + 1]
+                              ? `${ingredients},`
+                              : ingredients}
+                          </Text>
+                        );
+                      }
+                    )}
                   </ListItem>
+                  <Text style={{ paddingTop: 5 }}>Missing Ingredients: </Text>
+                  <ListItem>
+                    {item.ingredients.missedIngredients.map(
+                      (ingredients, index) => {
+                        return (
+                          <Text note style={{ paddingRight: 5 }}>
+                            {item.ingredients.missedIngredients[index + 1]
+                              ? `${ingredients},`
+                              : ingredients}
+                          </Text>
+                        );
+                      }
+                    )}
+                  </ListItem>
+                  {/* <ListItem>
+                    <Text>{item.r}</Text>
+                  </ListItem> */}
                 </List>
               </CardItem>
               <CardItem>
