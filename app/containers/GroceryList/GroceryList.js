@@ -33,6 +33,7 @@ import {
 
 import GroceryListItem from "../../components/GroceryListItem/GroceryListItem";
 import SwipeList from "../../components/SwipeList/SwipeList";
+import Footer from "../../components/Footer/Footer";
 import AppHeader from "../../components/Header/Header";
 
 const DATA = [
@@ -53,7 +54,7 @@ const DATA = [
   },
 ];
 
-export default function GroceryList() {
+export default function GroceryList({ navigation }) {
   const [selectedId, setSelectedId] = useState(null);
   const [fabActive, setFabActive] = useState(false);
   const [inputItem, setInputItem] = useState(null);
@@ -62,7 +63,7 @@ export default function GroceryList() {
 
   return (
     <Container style={styles.container}>
-      <AppHeader title={"Grocery List"} />
+      <AppHeader title="Grocery List" />
       <SwipeList data={groceryList} />
       {fabActive ? (
         <Form style={{ paddingBottom: "1%" }}>
@@ -109,6 +110,7 @@ export default function GroceryList() {
           <Icon name="cart" />
         )}
       </Fab>
+      {/* <Footer navigation={navigation} /> */}
     </Container>
   );
 }

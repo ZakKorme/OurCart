@@ -10,11 +10,10 @@ import {
   Text,
   View,
 } from "native-base";
-import { Link, useHistory } from "react-router-native";
+import { useHistory } from "react-router";
 
 export default function BottomBanner(props) {
   let history = useHistory();
-
   return (
     <Footer style={{ backgroundColor: "green" }}>
       <FooterTab>

@@ -87,7 +87,7 @@ const Title = ({ title, items }) => {
             </Left>
 
             <Right>
-              <Text>{item.quantity}</Text>
+              <Text>{`${item.quantity}`}</Text>
             </Right>
           </ListItem>
         );

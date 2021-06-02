@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Footer from "../../components/Footer/Footer";
 import { StyleSheet } from "react-native";
 import {
   Text,
@@ -10,12 +11,12 @@ import {
   Icon,
   Content,
 } from "native-base";
-import { Link, useHistory } from "react-router-native";
+import { useHistory } from "react-router";
 
 import PantryList from "../../components/PantryList/PantryList";
 import AppHeader from "../../components/Header/Header";
 
-export default function Pantry() {
+export default function Pantry({ navigation }) {
   const [fabActive, setFabActive] = useState(false);
 
   let history = useHistory();

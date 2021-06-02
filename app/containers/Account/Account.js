@@ -7,10 +7,12 @@ import {
   TouchableRipple,
 } from "react-native-paper";
 import { StyleSheet, Button, View, SafeAreaView } from "react-native";
-import { Container } from "native-base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import * as firebase from "firebase";
+import { useHistory } from "react-router";
 
-export default function Account() {
+export default function Account({ navigation }) {
+  let history = useHistory();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
@@ -99,6 +101,17 @@ export default function Account() {
               <Text style={styles.menuItemText}>Remove Pantry Item</Text>
             </View>
           </TouchableRipple>
+          <TouchableRipple
+            onPress={() => {
+              firebase.auth().signOut();
+              history.push("/");
+            }}
+          >
+            <View style={styles.menuItem}>
+              <Icon name="logout" color="green" size={25} />
+              <Text style={styles.menuItemText}>Logout</Text>
+            </View>
+          </TouchableRipple>
         </View>
       </View>
     </SafeAreaView>
@@ -108,6 +121,7 @@ export default function Account() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   userInfoSection: {
     paddingHorizontal: 30,

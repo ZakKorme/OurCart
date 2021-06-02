@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import { Image, StyleSheet } from "react-native";
-
+import Footer from "../../components/Footer/Footer";
 import {
   Container,
   Header,
@@ -20,12 +20,12 @@ import {
   Input,
   Form,
 } from "native-base";
-import { Link, useHistory } from "react-router-native";
 import AppHeader from "../../components/Header/Header";
-import App from "../../App";
+import { useHistory } from "react-router";
 
-export default function Recipe() {
+export default function Recipe({ navigation }) {
   const [recipeNum, setRecipeNum] = useState(null);
+
   let history = useHistory();
   return (
     <Container style={styles.container}>
@@ -63,6 +63,7 @@ export default function Recipe() {
           <Text>Search</Text>
         </Button>
       </Form>
+      {/* <Footer navigation={navigation} /> */}
     </Container>
   );
 }
