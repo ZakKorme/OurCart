@@ -1,0 +1,9 @@
+export const LIST_INIT = "LIST_INIT";
+export const LIST_SUCCESS = "LIST_SUCCESS";
+export const LIST_FAILURE = "LIST_FAILURE";
+export const LIST_ADD = "LIST_ADD";
+export const LIST_ADD_SUCCESS = "LIST_ADD_SUCCESS";
+export const LIST_ADD_FAILURE = "LIST_ADD_FAILURE";
+export const LIST_REMOVE = "LIST_REMOVE";
+export const LIST_REMOVE_SUCCESS = "LIST_REMOVE_SUCCESS";
+export const LIST_REMOVE_FAILURE = "LIST_REMOVE_FAILURE";

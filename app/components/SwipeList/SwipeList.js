@@ -1,33 +1,10 @@
 import React, { useState } from "react";
-import {
-  Container,
-  ListItem,
-  Text,
-  Body,
-  CheckBox,
-  Label,
-  Form,
-  List,
-  Left,
-  Right,
-  Icon,
-  Fab,
-  Button,
-  Card,
-  CardItem,
-  Item,
-  Input,
-  View,
-} from "native-base";
-import {
-  StyleSheet,
-  Animated,
-  TouchableHighlight,
-  TouchableOpacity,
-  StatusBar,
-} from "react-native";
+import { Text, Icon, View } from "native-base";
+import { StyleSheet, TouchableHighlight, TouchableOpacity } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import GroceryListItem from "../GroceryListItem/GroceryListItem";
+import { useDispatch, useSelector } from "react-redux";
+import { removeItemFromList } from "../../store/actions/list";
 
 const DATA = [
   {
@@ -42,7 +19,7 @@ const DATA = [
   },
   {
     id: 3,
-    item: "Chocolate",
+    item: "Milk",
     quantity: "1",
   },
 ];
@@ -56,6 +33,10 @@ export default function SwipeList(props) {
     }))
   );
 
+  const dispatch = useDispatch();
+  const removeFromList = (deleteItem) =>
+    dispatch(removeItemFromList(deleteItem));
+
   const closeRow = (rowMap, rowKey) => {
     if (rowMap[rowKey]) {
       rowMap[rowKey].closeRow();
@@ -66,8 +47,10 @@ export default function SwipeList(props) {
     closeRow(rowMap, rowKey);
     const newData = [...listData];
     const prevIndex = listData.findIndex((item) => item.key === rowKey);
+    let deleteItem = newData[prevIndex].item;
     newData.splice(prevIndex, 1);
     setListData(newData);
+    removeFromList(deleteItem);
   };
   const VisibleItem = (props) => {
     const { data } = props;

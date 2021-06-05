@@ -1,40 +1,10 @@
-import React, { useState } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  SafeAreaView,
-  StatusBar,
-  TouchableOpacity,
-  Animated,
-  TouchableHighlight,
-} from "react-native";
-import {
-  Container,
-  ListItem,
-  Text,
-  Body,
-  CheckBox,
-  Label,
-  Form,
-  List,
-  Left,
-  Right,
-  Icon,
-  Fab,
-  Button,
-  Card,
-  Header,
-  Title,
-  CardItem,
-  Item,
-  Input,
-  View,
-} from "native-base";
-
-import GroceryListItem from "../../components/GroceryListItem/GroceryListItem";
+import React, { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
+import { Container, Form, Icon, Fab, Item, Input } from "native-base";
 import SwipeList from "../../components/SwipeList/SwipeList";
-import Footer from "../../components/Footer/Footer";
 import AppHeader from "../../components/Header/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { initList, addToList } from "../../store/actions/list";
 
 const DATA = [
   {
@@ -55,11 +25,19 @@ const DATA = [
 ];
 
 export default function GroceryList({ navigation }) {
+  const dispatch = useDispatch();
+  const listInit = () => dispatch(initList());
+  const listAdd = (item, quantity) => dispatch(addToList(item, quantity));
+
+  useEffect(() => {
+    listInit();
+  }, []);
+  const list = useSelector((state) => state.list.list);
   const [selectedId, setSelectedId] = useState(null);
   const [fabActive, setFabActive] = useState(false);
   const [inputItem, setInputItem] = useState(null);
   const [inputQuantity, setInputQuantity] = useState(null);
-  const [groceryList, setGroceryList] = useState(DATA);
+  const [groceryList, setGroceryList] = useState(list);
 
   return (
     <Container style={styles.container}>
@@ -93,14 +71,7 @@ export default function GroceryList({ navigation }) {
             name="add"
             onPress={() => {
               inputItem && inputQuantity
-                ? setGroceryList([
-                    ...groceryList,
-                    {
-                      id: groceryList.length + 1,
-                      item: inputItem,
-                      quantity: inputQuantity,
-                    },
-                  ])
+                ? listAdd(inputItem, inputQuantity)
                 : null;
               setInputItem(null);
               setFabActive(!fabActive);
@@ -110,7 +81,6 @@ export default function GroceryList({ navigation }) {
           <Icon name="cart" />
         )}
       </Fab>
-      {/* <Footer navigation={navigation} /> */}
     </Container>
   );
 }

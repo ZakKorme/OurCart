@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import AppLoading from "expo-app-loading";
+import { StyleSheet } from "react-native";
 import { Container, Root } from "native-base";
 import * as firebase from "firebase";
 import ApiKeys from "./constants/ApiKeys";
 import { NativeRouter, Switch, Route } from "react-router-native";
+import { Provider } from "react-redux";
+import configureStore from "./store/store";
 
 import GroceryList from "./containers/GroceryList/GroceryList";
 import Account from "./containers/Account/Account.js";
@@ -17,6 +18,8 @@ import RecipeSearch from "./containers/RecipeSearch/RecipeSearch";
 import Login from "./containers/Auth/Login";
 import Signup from "./containers/Auth/Signup";
 
+const store = configureStore();
+
 export default function App() {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
   const [isAuthenticationReady, setIsAuthenticationReady] = useState(false);
@@ -26,6 +29,8 @@ export default function App() {
     if (!firebase.apps.length) {
       firebase.initializeApp(ApiKeys.FirebaseConfig);
     }
+
+    // listInit();
     firebase.auth().onAuthStateChanged(onAuthStateChanged);
     return () => {
       setIsAuthenticated(false);
@@ -39,32 +44,32 @@ export default function App() {
     return;
   };
 
-  // const navigationRef = React.useRef(null);
-
   return (
-    <Root>
-      <NativeRouter>
-        <Container style={styles}>
-          {!isAuthenticated ? (
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-            </Switch>
-          ) : (
-            <Switch>
-              <Route exact path="/" component={GroceryList} />
-              <Route exact path="/pantry/entry" component={PantryEntry} />
-              <Route exact path="/recipe/fav" component={RecipeFav} />
-              <Route exact path="/recipe/search" component={RecipeSearch} />
-              <Route path="/pantry" component={Pantry} />
-              <Route path="/recipe" component={Recipe} />
-              <Route path="/account" component={Account} />
-            </Switch>
-          )}
-          {isAuthenticated ? <Footer /> : null}
-        </Container>
-      </NativeRouter>
-    </Root>
+    <Provider store={store}>
+      <Root>
+        <NativeRouter>
+          <Container style={styles}>
+            {!isAuthenticated ? (
+              <Switch>
+                <Route exact path="/" component={Login} />
+                <Route exact path="/signup" component={Signup} />
+              </Switch>
+            ) : (
+              <Switch>
+                <Route exact path="/" component={GroceryList} />
+                <Route exact path="/pantry/entry" component={PantryEntry} />
+                <Route exact path="/recipe/fav" component={RecipeFav} />
+                <Route exact path="/recipe/search" component={RecipeSearch} />
+                <Route path="/pantry" component={Pantry} />
+                <Route path="/recipe" component={Recipe} />
+                <Route path="/account" component={Account} />
+              </Switch>
+            )}
+            {isAuthenticated ? <Footer /> : null}
+          </Container>
+        </NativeRouter>
+      </Root>
+    </Provider>
   );
 }
 

@@ -7,5 +7,6 @@ export default {
     messagingSenderId: "100554582069",
     appId: "1:100554582069:web:f481af19556d05f875297c",
     measurementId: "G-CJ4S88Y5FL",
+    databaseURL: "https://ourcart-b26b4-default-rtdb.firebaseio.com",
   },
 };
