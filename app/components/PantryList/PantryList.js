@@ -60,16 +60,6 @@ const DATA = [
         quantity: 1,
         img: require("../../assets/pepper.jpeg"),
       },
-      {
-        item: "Salt",
-        quantity: 1,
-        img: require("../../assets/salt.jpeg"),
-      },
-      {
-        item: "Pepper",
-        quantity: 1,
-        img: require("../../assets/pepper.jpeg"),
-      },
     ],
   },
 ];

@@ -1,16 +1,7 @@
 import React, { useState } from "react";
-import Footer from "../../components/Footer/Footer";
+
 import { StyleSheet } from "react-native";
-import {
-  Text,
-  View,
-  Container,
-  Card,
-  CardItem,
-  Fab,
-  Icon,
-  Content,
-} from "native-base";
+import { Container, Fab, Icon } from "native-base";
 import { useHistory } from "react-router";
 
 import PantryList from "../../components/PantryList/PantryList";
