@@ -39,6 +39,7 @@ export default function App() {
   }, []);
 
   const onAuthStateChanged = (user) => {
+    console.log(isAuthenticated);
     setIsAuthenticationReady(true);
     setIsAuthenticated(!!user);
     return;

@@ -7,7 +7,6 @@ import {
   List,
   ListItem,
   Icon,
-  Header,
   Button,
   Spinner,
   View,
@@ -28,21 +27,26 @@ export default function Login({ navigation }) {
     icon === "eye" ? setIcon("eye-off") : setIcon("eye");
   };
 
-  const onLogin = async () => {
+  const onLogin = () => {
     setLoading(true);
-    const res = await firebase
+    console.log("Before Auth");
+    firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(
-        () => {
+        (firebaseSuccessUser) => {
           setLoading(false);
+          console.log("Authenticated");
           history.push("/");
         },
         (error) => {
           Alert.alert(error.message);
           setLoading(false);
         }
-      );
+      )
+      .catch((err) => {
+        console.warn(err);
+      });
   };
   const onCreateAccount = () => {
     history.push("/signup");

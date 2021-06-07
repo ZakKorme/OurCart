@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import {
   Container,
   Header,
@@ -12,6 +12,8 @@ import {
   Thumbnail,
 } from "native-base";
 import { FlatList, SafeAreaView } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { initPantry } from "../../store/actions/pantry";
 
 const DATA = [
   {
@@ -96,7 +98,16 @@ const Title = ({ title, items }) => {
   );
 };
 export default function PantryList() {
-  const [pantryItems, setPantryItems] = useState(DATA);
+  const dispatch = useDispatch();
+  const pantryInit = () => dispatch(initPantry());
+
+  useEffect(() => {
+    pantryInit();
+    console.log(pantry);
+  }, []);
+
+  const pantry = useSelector((state) => state.pantry.pantry);
+  const [pantryItems, setPantryItems] = useState(pantry);
 
   const renderTitle = ({ item }) => {
     return <Title title={item.category} items={item.items} />;
@@ -105,7 +116,7 @@ export default function PantryList() {
   return (
     <SafeAreaView>
       <FlatList
-        data={DATA}
+        data={pantryItems}
         renderItem={renderTitle}
         keyExtractor={(item) => item.category_id}
       />

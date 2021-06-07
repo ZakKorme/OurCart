@@ -10,7 +10,11 @@ const pantryReducer = (state = initialState, action) => {
     case actionTypes.PANTRY_INIT_SUCCESS:
       return {
         ...state,
-        pantry: action.data,
+        pantry: action.pantry,
+      };
+    case actionTypes.PANTRY_ADD_SUCCESS:
+      return {
+        ...state,
       };
     default:
       return state;
