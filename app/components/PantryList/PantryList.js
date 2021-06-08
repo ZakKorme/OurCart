@@ -12,59 +12,59 @@ import {
   Thumbnail,
 } from "native-base";
 import { FlatList, SafeAreaView } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { initPantry } from "../../store/actions/pantry";
 
-const DATA = [
-  {
-    category_id: 1,
-    category: "PRODUCE",
-    items: [
-      {
-        item: "Tomatoes",
-        quantity: 2,
-        img: require("../../assets/721px-Tomato_je.jpeg"),
-      },
-      {
-        item: "Oranges",
-        quantity: 1,
-        img: require("../../assets/oranges.jpeg"),
-      },
-    ],
-  },
-  {
-    category_id: 2,
-    category: "DAIRY",
-    items: [
-      {
-        item: "Milk",
-        quantity: 1,
-        img: require("../../assets/Milk.jpeg"),
-      },
-      {
-        item: "Cheese",
-        quantity: 3,
-        img: require("../../assets/cheese.jpeg"),
-      },
-    ],
-  },
-  {
-    category_id: 3,
-    category: "SPICES",
-    items: [
-      {
-        item: "Salt",
-        quantity: 1,
-        img: require("../../assets/salt.jpeg"),
-      },
-      {
-        item: "Pepper",
-        quantity: 1,
-        img: require("../../assets/pepper.jpeg"),
-      },
-    ],
-  },
-];
+// const DATA = [
+//   {
+//     category_id: 1,
+//     category: "PRODUCE",
+//     items: [
+//       {
+//         item: "Tomatoes",
+//         quantity: 2,
+//         img: require("../../assets/721px-Tomato_je.jpeg"),
+//       },
+//       {
+//         item: "Oranges",
+//         quantity: 1,
+//         img: require("../../assets/oranges.jpeg"),
+//       },
+//     ],
+//   },
+//   {
+//     category_id: 2,
+//     category: "DAIRY",
+//     items: [
+//       {
+//         item: "Milk",
+//         quantity: 1,
+//         img: require("../../assets/Milk.jpeg"),
+//       },
+//       {
+//         item: "Cheese",
+//         quantity: 3,
+//         img: require("../../assets/cheese.jpeg"),
+//       },
+//     ],
+//   },
+//   {
+//     category_id: 3,
+//     category: "SPICES",
+//     items: [
+//       {
+//         item: "Salt",
+//         quantity: 1,
+//         img: require("../../assets/salt.jpeg"),
+//       },
+//       {
+//         item: "Pepper",
+//         quantity: 1,
+//         img: require("../../assets/pepper.jpeg"),
+//       },
+//     ],
+//   },
+// ];
 
 const Title = ({ title, items }) => {
   return (
@@ -75,7 +75,7 @@ const Title = ({ title, items }) => {
 
       {items.map((item, index) => {
         return (
-          <ListItem key={`${item.category_id}_${index}`}>
+          <ListItem key={`${item.item}_${index}`}>
             <Left>
               <Thumbnail
                 style={{
@@ -83,7 +83,9 @@ const Title = ({ title, items }) => {
                   height: 30,
                   borderRadius: 30 / 2,
                 }}
-                source={item.img}
+                source={{
+                  uri: `${item.img}`,
+                }}
               />
               <Text style={{ paddingLeft: 10 }}>{item.item}</Text>
             </Left>
@@ -97,29 +99,44 @@ const Title = ({ title, items }) => {
     </View>
   );
 };
-export default function PantryList() {
-  const dispatch = useDispatch();
-  const pantryInit = () => dispatch(initPantry());
+function PantryList(props) {
+  // const dispatch = useDispatch();
+  // const pantryInit = () => dispatch(initPantry());
 
   useEffect(() => {
-    pantryInit();
-    console.log(pantry);
+    props.pantryInit();
   }, []);
 
   const pantry = useSelector((state) => state.pantry.pantry);
-  const [pantryItems, setPantryItems] = useState(pantry);
+  const [pantryItems, setPantryItems] = useState(props.pantry);
 
   const renderTitle = ({ item }) => {
     return <Title title={item.category} items={item.items} />;
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <FlatList
         data={pantryItems}
         renderItem={renderTitle}
-        keyExtractor={(item) => item.category_id}
+        keyExtractor={(item, index) => `${item.category}_${index}`}
       />
     </SafeAreaView>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    pantry: state.pantry.pantry,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    pantryInit: () => {
+      dispatch(initPantry());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PantryList);

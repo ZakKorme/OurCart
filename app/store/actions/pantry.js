@@ -5,7 +5,7 @@ const pantryIndex = {
   Beverages: 0,
   Bread: 1,
   Canned: 2,
-  Diary: 3,
+  Dairy: 3,
   "Baking Goods": 4,
   "Frozen Foods": 5,
   Meat: 6,
@@ -30,6 +30,7 @@ export const initPantry = () => {
         });
       });
   }
+
   return {
     type: actionTypes.PANTRY_INIT_SUCCESS,
     pantry: newPantry,
@@ -44,18 +45,30 @@ export const initPantrySuccess = (pantry) => {
 };
 
 export const pantryAdd = (item, quantity, category, code) => {
-  img = null;
-  firebase
-    .database()
-    .ref("Pantry/" + category)
-    .push({
-      item: item,
-      quantity: quantity,
-      image: img,
-      barcode: code,
-    });
+  let imgLink = "";
 
-  return {
-    type: actionTypes.PANTRY_ADD_SUCCESS,
+  return async () => {
+    try {
+      const res = await fetch(
+        `https://api.unsplash.com/search/photos/?client_id=LYGQ0_qf2epXnl7P8zFda8FGAzwoEsI3f72VQjmjGac&page=1&query=${item}`
+      );
+      const body = await res.json();
+      imgLink = body.results[0].links.download;
+
+      firebase
+        .database()
+        .ref("Pantry/" + category)
+        .push({
+          item: item,
+          quantity: quantity,
+          img: imgLink,
+          barcode: code,
+        });
+    } catch (err) {
+      console.warn(err);
+    }
+    return {
+      type: actionTypes.PANTRY_ADD_SUCCESS,
+    };
   };
 };

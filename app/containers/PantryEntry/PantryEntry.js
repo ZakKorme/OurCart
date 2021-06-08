@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import {
   Container,
-  Text,
   Fab,
   Icon,
-  Content,
   Form,
   Item,
   Label,
@@ -12,11 +10,16 @@ import {
   Input,
   Picker,
 } from "native-base";
-import { Link, useHistory } from "react-router-native";
+import { useHistory } from "react-router-native";
 import AppHeader from "../../components/Header/Header";
+import { connect } from "react-redux";
+import { pantryAdd } from "../../store/actions/pantry";
 
-export default function PantryEntry() {
+function PantryEntry(props) {
+  const [item, setItem] = useState(null);
+  const [quantity, setQuantity] = useState(null);
   const [category, setCategory] = useState(null);
+  const [barcode, setBarCode] = useState(null);
 
   let history = useHistory();
 
@@ -35,32 +38,32 @@ export default function PantryEntry() {
             selectedValue={category}
             onValueChange={(value) => setCategory(value)}
           >
-            <Picker.Item label="Beverages" value="key0" />
-            <Picker.Item label="Bread" value="key1" />
-            <Picker.Item label="Canned" value="key2" />
-            <Picker.Item label="Diary" value="key3" />
-            <Picker.Item label="Baking Goods" value="key4" />
-            <Picker.Item label="Frozen Foods" value="key5" />
-            <Picker.Item label="Meat" value="key6" />
-            <Picker.Item label="Produce" value="key7" />
-            <Picker.Item label="Cleaners" value="key8" />
-            <Picker.Item label="Paper Goods" value="key9" />
-            <Picker.Item label="Personal Care" value="key10" />
-            <Picker.Item label="Other" value="key11" />
+            <Picker.Item label="Beverages" value="Beverages" />
+            <Picker.Item label="Bread" value="Bread" />
+            <Picker.Item label="Canned" value="Canned" />
+            <Picker.Item label="Dairy" value="Dairy" />
+            <Picker.Item label="Baking Goods" value="Baking Goods" />
+            <Picker.Item label="Frozen Foods" value="Frozen Foods" />
+            <Picker.Item label="Meat" value="Meat" />
+            <Picker.Item label="Produce" value="Produce" />
+            <Picker.Item label="Cleaners" value="Cleaners" />
+            <Picker.Item label="Paper Goods" value="Paper Goods" />
+            <Picker.Item label="Personal Care" value="Personal Care" />
+            <Picker.Item label="Other" value="Other" />
           </Picker>
         </Item>
         <Header />
         <Item inlineLabel last>
           <Label>Item</Label>
-          <Input />
+          <Input value={item} onChangeText={(val) => setItem(val)} />
         </Item>
         <Item inlineLabel last>
           <Label>Quantity</Label>
-          <Input />
+          <Input onChangeText={(val) => setQuantity(val)} value={quantity} />
         </Item>
         <Item inlineLabel last>
           <Label>Barcode</Label>
-          <Input />
+          <Input onChangeText={(val) => setBarCode(val)} value={barcode} />
         </Item>
       </Form>
 
@@ -69,8 +72,10 @@ export default function PantryEntry() {
         direction="up"
         style={{ backgroundColor: "green" }}
         position="bottomRight"
-        onPress={() => {
-          history.push("/pantry");
+        onPress={async () => {
+          await props.addPantry(item, quantity, category, barcode).then(() => {
+            history.push("/pantry");
+          });
         }}
       >
         <Icon name="add"></Icon>
@@ -78,3 +83,12 @@ export default function PantryEntry() {
     </Container>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addPantry: (item, quantity, category, code) =>
+      dispatch(pantryAdd(item, quantity, category, code)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(PantryEntry);

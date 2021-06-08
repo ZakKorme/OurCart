@@ -10,7 +10,7 @@ export const initList = () => {
     .on("value", (snap) => {
       newList = Object.values(snap.val());
     });
-  console.log(newList);
+
   newList
     ? newList.forEach((element) => {
         for (let i in element) {

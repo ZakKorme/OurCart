@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, LogBox } from "react-native";
 import { Container, Root } from "native-base";
 import * as firebase from "firebase";
 import ApiKeys from "./constants/ApiKeys";
@@ -19,6 +19,11 @@ import Login from "./containers/Auth/Login";
 import Signup from "./containers/Auth/Signup";
 
 const store = configureStore();
+
+LogBox.ignoreLogs([
+  "VirtualizedLists should never be nested", // TODO: Remove when fixed
+  "Remote debugger is in a background tab which may cause apps to perform slowly",
+]);
 
 export default function App() {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
