@@ -29,14 +29,13 @@ export default function Login({ navigation }) {
 
   const onLogin = () => {
     setLoading(true);
-    console.log("Before Auth");
+
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(
         (firebaseSuccessUser) => {
           setLoading(false);
-          console.log("Authenticated");
           history.push("/");
         },
         (error) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import { Container, Form, Icon, Fab, Item, Input } from "native-base";
+import { Container, Form, Icon, Fab, Item, Input, Spinner } from "native-base";
 import SwipeList from "../../components/SwipeList/SwipeList";
 import AppHeader from "../../components/Header/Header";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,9 +28,12 @@ export default function GroceryList({ navigation }) {
   const dispatch = useDispatch();
   const listInit = () => dispatch(initList());
   const listAdd = (item, quantity) => dispatch(addToList(item, quantity));
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     listInit();
+    setIsLoading(false);
   }, []);
   const list = useSelector((state) => state.list.list);
   const [selectedId, setSelectedId] = useState(null);
@@ -42,7 +45,10 @@ export default function GroceryList({ navigation }) {
   return (
     <Container style={styles.container}>
       <AppHeader title="Grocery List" />
+      {isLoading ? <Spinner color="green" /> : null}
+
       <SwipeList data={groceryList} />
+
       {fabActive ? (
         <Form style={{ paddingBottom: "1%" }}>
           <Item style={{ width: "70%" }}>

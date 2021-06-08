@@ -9,6 +9,7 @@ import {
   Right,
   Left,
   View,
+  Spinner,
   Thumbnail,
 } from "native-base";
 import { FlatList, SafeAreaView } from "react-native";
@@ -100,11 +101,12 @@ const Title = ({ title, items }) => {
   );
 };
 function PantryList(props) {
-  // const dispatch = useDispatch();
-  // const pantryInit = () => dispatch(initPantry());
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     props.pantryInit();
+    setIsLoading(false);
   }, []);
 
   const pantry = useSelector((state) => state.pantry.pantry);
@@ -116,6 +118,7 @@ function PantryList(props) {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      {isLoading ? <Spinner color="green" /> : null}
       <FlatList
         data={pantryItems}
         renderItem={renderTitle}
