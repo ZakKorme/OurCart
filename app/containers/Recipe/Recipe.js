@@ -1,20 +1,11 @@
-import React, { Component, useState } from "react";
-import { Image, StyleSheet } from "react-native";
-import Footer from "../../components/Footer/Footer";
+import React, { useState } from "react";
+import { StyleSheet } from "react-native";
 import {
   Container,
-  Header,
-  View,
-  DeckSwiper,
-  Card,
-  CardItem,
-  Thumbnail,
   Text,
   Left,
-  Body,
   Icon,
   Button,
-  Title,
   Right,
   ListItem,
   Input,
@@ -22,8 +13,10 @@ import {
 } from "native-base";
 import AppHeader from "../../components/Header/Header";
 import { useHistory } from "react-router";
+import { connect, useDispatch } from "react-redux";
+import { savedRecipes } from "../../store/actions/recipe";
 
-export default function Recipe({ navigation }) {
+function Recipe(props) {
   const [recipeNum, setRecipeNum] = useState(null);
 
   let history = useHistory();
@@ -46,7 +39,13 @@ export default function Recipe({ navigation }) {
             <Text style={{ color: "black", fontSize: 15 }}>Saved Recipes</Text>
           </Left>
           <Right>
-            <Button transparent onPress={() => history.push("/recipe/fav")}>
+            <Button
+              transparent
+              onPress={() => {
+                props.recipeFav();
+                history.push("/recipe/fav");
+              }}
+            >
               <Icon name="heart" style={{ color: "green" }} />
             </Button>
           </Right>
@@ -63,7 +62,6 @@ export default function Recipe({ navigation }) {
           <Text>Search</Text>
         </Button>
       </Form>
-      {/* <Footer navigation={navigation} /> */}
     </Container>
   );
 }
@@ -74,3 +72,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    recipeFav: () => dispatch(savedRecipes()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Recipe);

@@ -11,6 +11,7 @@ import {
   ListItem,
 } from "native-base";
 import { useHistory } from "react-router-native";
+import { connect } from "react-redux";
 
 import AppHeader from "../../components/Header/Header";
 
@@ -31,7 +32,7 @@ const dataArray = [
   },
 ];
 
-export default function RecipeFav() {
+function RecipeFav(props) {
   let history = useHistory();
 
   const _renderHeader = (item, expanded) => {
@@ -98,10 +99,9 @@ export default function RecipeFav() {
       <AppHeader title={"Favorites"} />
       <Content padder>
         <Accordion
-          dataArray={dataArray}
+          dataArray={props.recipeList}
           animation={true}
           expanded={[]}
-          // renderHeader={renderHeader}
           icon="add"
           expandedIcon="remove"
           renderHeader={_renderHeader}
@@ -123,3 +123,11 @@ export default function RecipeFav() {
     </Container>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    recipeList: state.recipe.recipe,
+  };
+};
+
+export default connect(mapStateToProps)(RecipeFav);
