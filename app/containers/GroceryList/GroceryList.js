@@ -5,34 +5,19 @@ import SwipeList from "../../components/SwipeList/SwipeList";
 import AppHeader from "../../components/Header/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { initList, addToList } from "../../store/actions/list";
+import { getUser } from "../../store/actions/users";
 
-const DATA = [
-  {
-    id: 1,
-    item: "Bread",
-    quantity: "2",
-  },
-  {
-    id: 2,
-    item: "Nutmeg",
-    quantity: "5",
-  },
-  {
-    id: 3,
-    item: "Chocolate",
-    quantity: "1",
-  },
-];
-
-export default function GroceryList({ navigation }) {
+export default function GroceryList() {
   const dispatch = useDispatch();
   const listInit = () => dispatch(initList());
   const listAdd = (item, quantity) => dispatch(addToList(item, quantity));
+  const getUserInit = () => dispatch(dispatch(getUser()));
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
     listInit();
+    getUserInit();
     setIsLoading(false);
   }, []);
   const list = useSelector((state) => state.list.list);

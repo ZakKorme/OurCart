@@ -6,13 +6,29 @@ import {
   Text,
   TouchableRipple,
 } from "react-native-paper";
-import { StyleSheet, Button, View, SafeAreaView } from "react-native";
+import { StyleSheet, View, SafeAreaView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as firebase from "firebase";
 import { useHistory } from "react-router";
+import { connect } from "react-redux";
 
-export default function Account({ navigation }) {
+let formatPhoneNumber = (str) => {
+  //Filter only numbers from the input
+  let cleaned = ("" + str).replace(/\D/g, "");
+
+  //Check if the input is of correct length
+  let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+
+  if (match) {
+    return "(" + match[1] + ") " + match[2] + "-" + match[3];
+  }
+
+  return null;
+};
+
+function Account(props) {
   let history = useHistory();
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
@@ -34,9 +50,12 @@ export default function Account({ navigation }) {
                 },
               ]}
             >
-              John Doe
+              {firebase.auth().currentUser.displayName}
             </Title>
-            <Caption style={styles.caption}>user_id: @j_doe</Caption>
+            <Caption style={styles.caption}>
+              user_id:{" "}
+              {firebase.auth().currentUser.displayName.split(" ").join("_")}
+            </Caption>
           </View>
         </View>
         <View
@@ -48,19 +67,15 @@ export default function Account({ navigation }) {
           ]}
         >
           <View style={styles.row}>
-            <Icon name="map-marker-radius" color="#777777" size={20} />
-            <Text style={{ color: "#777777", marginLeft: 20 }}>Severn, MD</Text>
-          </View>
-          <View style={styles.row}>
             <Icon name="phone" color="#777777" size={20} />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
-              (240)-XXX-XXXX
+              {`+1 ${formatPhoneNumber(props.phoneNumber)}`}
             </Text>
           </View>
           <View style={styles.row}>
             <Icon name="email" color="#777777" size={20} />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
-              john_doe@gmail.com
+              {firebase.auth().currentUser.email}
             </Text>
           </View>
         </View>
@@ -74,7 +89,7 @@ export default function Account({ navigation }) {
               },
             ]}
           >
-            <Title>45</Title>
+            <Title>{`${props.numOfRecipes}`}</Title>
             <Caption>Saved Recipes</Caption>
           </View>
           <View style={styles.infoBox}>
@@ -169,3 +184,13 @@ const styles = StyleSheet.create({
     lineHeight: 26,
   },
 });
+
+const mapStateToProps = (state) => {
+  return {
+    numOfRecipes: state.user.numOfRecipes,
+    phoneNumber: state.user.phoneNumber,
+    firstName: state.user.firstName,
+  };
+};
+
+export default connect(mapStateToProps)(Account);

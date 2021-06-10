@@ -4,8 +4,9 @@ import { Container, Root } from "native-base";
 import * as firebase from "firebase";
 import ApiKeys from "./constants/ApiKeys";
 import { NativeRouter, Switch, Route } from "react-router-native";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import configureStore from "./store/store";
+import { getUser } from "./store/actions/users";
 
 import GroceryList from "./containers/GroceryList/GroceryList";
 import Account from "./containers/Account/Account.js";
@@ -36,6 +37,7 @@ export default function App() {
     }
 
     // listInit();
+
     firebase.auth().onAuthStateChanged(onAuthStateChanged);
     return () => {
       setIsAuthenticated(false);
@@ -46,6 +48,7 @@ export default function App() {
   const onAuthStateChanged = (user) => {
     setIsAuthenticationReady(true);
     setIsAuthenticated(!!user);
+
     return;
   };
 

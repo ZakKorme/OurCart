@@ -43,9 +43,13 @@ function Recipe(props) {
           <Right>
             <Button
               transparent
-              onPress={() => {
-                props.recipeFav();
-                history.push("/recipe/fav");
+              onPress={async () => {
+                setIsLoading(!isLoading);
+                await props.recipeFav();
+                setTimeout(() => {
+                  setIsLoading(!isLoading);
+                  history.push("/recipe/fav");
+                }, 1000);
               }}
             >
               <Icon name="heart" style={{ color: "green" }} />

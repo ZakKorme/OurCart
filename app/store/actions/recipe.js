@@ -14,7 +14,7 @@ export const savedRecipes = () => {
     });
 
   for (let i in usersRecipes) {
-    if (currentUserEmail === usersRecipes[i].Email) {
+    if (currentUserEmail === usersRecipes[i].Email.toLowerCase()) {
       currentUserRecipes = Object.values(usersRecipes[i].Recipes);
       break;
     }
@@ -90,7 +90,7 @@ export const addRecipe = (recipe) => {
     });
 
   for (let i in usersObj) {
-    if (currentUserEmail === usersObj[i].Email) {
+    if (currentUserEmail === usersObj[i].Email.toLowerCase()) {
       userEntryId = i.toString();
     }
   }
