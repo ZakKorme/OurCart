@@ -74,3 +74,38 @@ export const searchSuccess = (recipeList) => {
     recipeSearch: recipeList,
   };
 };
+
+export const addRecipe = (recipe) => {
+  let currentUserEmail = firebase.auth().currentUser.email;
+  let usersObj = [];
+  let userEntries = [];
+  let userEntryId = "";
+
+  firebase
+    .database()
+    .ref("Users")
+    .on("value", (snap) => {
+      usersObj = snap.val();
+      userEntries = Object.keys(snap.val());
+    });
+
+  for (let i in usersObj) {
+    if (currentUserEmail === usersObj[i].Email) {
+      userEntryId = i.toString();
+    }
+  }
+
+  let dbEntryPath = "Users/" + userEntryId + "/Recipes";
+  let dbEntry = {
+    recipeName: recipe.recipeName,
+    ingredients: {
+      missedIngredients: recipe.ingredients.missedIngredients,
+      usedIngredients: recipe.ingredients.usedIngredients,
+    },
+  };
+  firebase.database().ref(dbEntryPath).push(dbEntry);
+
+  return {
+    type: actionTypes.RECIPE_FAV_ADD,
+  };
+};

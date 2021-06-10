@@ -14,10 +14,12 @@ import {
   Button,
   ListItem,
   List,
+  Toast,
 } from "native-base";
 
 import AppHeader from "../../components/Header/Header";
 import { connect } from "react-redux";
+import { addRecipe } from "../../store/actions/recipe";
 
 const cards = [
   {
@@ -42,6 +44,7 @@ const cards = [
 
 function RecipeSearch(props) {
   const [recipeSearchList] = useState(props.recipeSearch);
+  const [showToast, setShowToast] = useState(false);
 
   const _renderHeader = (item, expanded) => {
     return (
@@ -136,6 +139,15 @@ function RecipeSearch(props) {
                     marginTop: 10,
                     marginLeft: "25%",
                   }}
+                  onPress={() => {
+                    props.addRecipe(item);
+                    Toast.show({
+                      text: "Recipe Saved!",
+                      buttonText: "Okay",
+                      buttonTextStyle: { color: "#008000" },
+                      buttonStyle: { backgroundColor: "#5cb85c" },
+                    });
+                  }}
                 >
                   <Icon name="heart" style={{ color: "white" }} />
                   <Text>Save Recipe</Text>
@@ -155,4 +167,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(RecipeSearch);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addRecipe: (recipe) => dispatch(addRecipe(recipe)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeSearch);
