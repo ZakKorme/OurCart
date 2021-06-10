@@ -1,8 +1,7 @@
-import React, { Component, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image } from "react-native";
 import {
   Container,
-  Content,
   Text,
   Body,
   View,
@@ -11,16 +10,14 @@ import {
   CardItem,
   Thumbnail,
   Left,
-  Right,
   Icon,
   Button,
-  Header,
-  Accordion,
   ListItem,
   List,
 } from "native-base";
 
 import AppHeader from "../../components/Header/Header";
+import { connect } from "react-redux";
 
 const cards = [
   {
@@ -43,7 +40,9 @@ const cards = [
   },
 ];
 
-export default function RecipeSearch() {
+function RecipeSearch(props) {
+  const [recipeSearchList] = useState(props.recipeSearch);
+
   const _renderHeader = (item, expanded) => {
     return (
       <View
@@ -83,9 +82,9 @@ export default function RecipeSearch() {
       <AppHeader title={"Search"} />
       <View>
         <DeckSwiper
-          dataSource={cards}
+          dataSource={recipeSearchList}
           renderItem={(item) => (
-            <Card style={{ elevation: 3 }}>
+            <Card style={{ elevation: 3 }} key={item.key}>
               <CardItem>
                 <Left>
                   <Thumbnail source={item.image} />
@@ -128,9 +127,6 @@ export default function RecipeSearch() {
                       }
                     )}
                   </ListItem>
-                  {/* <ListItem>
-                    <Text>{item.r}</Text>
-                  </ListItem> */}
                 </List>
               </CardItem>
               <CardItem>
@@ -152,3 +148,11 @@ export default function RecipeSearch() {
     </Container>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    recipeSearch: state.recipe.recipeSearch,
+  };
+};
+
+export default connect(mapStateToProps)(RecipeSearch);
